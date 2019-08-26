@@ -1,0 +1,16 @@
+{
+  "name": "mywebsite",
+  "version": "1.0.0",
+  "description": "NodeJS MongoDB website for personal things",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "me",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1"
+  }
+}
