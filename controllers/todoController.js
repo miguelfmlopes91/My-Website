@@ -27,14 +27,16 @@ module.exports = function(app) {
     })
     app.post('/todo', urlencodedParser, (req, res) => {
         //get data from the view and add it to mongodb
-        var newTodo = Todo
-        data.push(req.body);
-        res.json(data);
+        var newTodo = Todo(req.body).save((err, data) => {
+            if (err) throw err;
+            res.json(data);
+        })
     })
     app.delete('/todo/:item', (req, res) => {
-        data = data.filter((todo) => {
-            return todo.item.replace(/ /g, '-') !== req.params.item;
-        });
-        res.json(data);
+        //delete the requested item from mongodb
+        Todo.find({item: req.params.item.replace(/\-/g, " ")}).remove((err, data) => {
+            if (err) throw err;
+            res.json(data);
+        })
     })
 }
