@@ -14,21 +14,20 @@ var todoSchema = new MongoClient.Schema({
 //The Model type
 var Todo = MongoClient.model('Todo', todoSchema);
 
-//test
-var item1 =  Todo({item: 'Buy flowers'}).save((error) => {
-    if(error) throw error;
-    console.log("Item saved");
-    
-});
-
-var data = [{item: "Get Milk"},{item: "Get rich"},{item: "Kick some ass"}]
+//var data = [{item: "Get Milk"},{item: "Get rich"},{item: "Kick some ass"}]
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 module.exports = function(app) {
     app.get('/todo', (req, res) => {
-        res.render('todo',{todos: data});
+        //get data from mongodb and pass it to the view
+        Todo.find({}, (err, data) => {
+            if (err) throw err;
+        });//retrieve all of the items from a collection
+        res.render('todo', {todos: data});
     })
     app.post('/todo', urlencodedParser, (req, res) => {
+        //get data from the view and add it to mongodb
+        var newTodo = Todo
         data.push(req.body);
         res.json(data);
     })
